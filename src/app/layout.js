@@ -1,15 +1,6 @@
-import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import Preloader from "@/components/ui/Preloader";
 import JsonLd from "@/components/seo/JsonLd";
-
-// Self-hosted at build time by next/font: no render-blocking request to Google
-const sourceSans = Source_Sans_3({
-  subsets: ["latin"],
-  weight: ["300", "400", "600", "700", "900"],
-  display: "swap",
-  variable: "--font-source-sans",
-});
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://lucid-lamiakajal.vercel.app";
@@ -91,7 +82,25 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={sourceSans.variable}>
+    <html lang="en">
+      <head>
+        {/*
+          The font is loaded by the visitor's browser instead of during `next build`,
+          so a slow or blocked connection to Google can never break the build (CI).
+        */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700;900&display=swap"
+        />
+      </head>
+      {/* suppressHydrationWarning: browser extensions (e.g. ColorZilla) add attributes to <body> */}
       <body className="antialiased" suppressHydrationWarning>
         {/* Without JavaScript the scroll-reveal never runs and the preloader never closes */}
         <noscript>
