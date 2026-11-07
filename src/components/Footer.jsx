@@ -45,7 +45,15 @@ export default function Footer() {
 
         {/* Copyright text */}
         <p className="text-xs font-normal tracking-wide text-[#666666] sm:text-[13px]">
-          copyright &copy; {new Date().getFullYear()} Design By LAMIA KAJAL
+          copyright &copy; {new Date().getFullYear()} Design By{" "}
+          <a
+            href="https://github.com/lamiakajal"
+            target="_blank"
+            rel="author noopener noreferrer"
+            className="font-semibold uppercase transition-colors hover:text-[#008ed6]"
+          >
+            Lamia Kajal
+          </a>
         </p>
       </div>
     </footer>
