@@ -1,5 +1,6 @@
 import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
+import Preloader from "@/components/ui/Preloader";
 
 // Self-hosted at build time by next/font: no render-blocking request to Google
 const sourceSans = Source_Sans_3({
@@ -48,10 +49,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={sourceSans.variable}>
       <body className="antialiased">
-        {/* Without JavaScript the scroll-reveal never runs, so show everything */}
+        {/* Without JavaScript the scroll-reveal never runs, and the preloader never closes, so show everything */}
         <noscript>
-          <style>{".reveal{opacity:1!important;transform:none!important}"}</style>
+          <style>{".reveal{opacity:1!important;transform:none!important}.preloader{display:none!important}"}</style>
         </noscript>
+
+        <Preloader />
 
         {/* Lets keyboard users jump straight past the navigation */}
         <a
