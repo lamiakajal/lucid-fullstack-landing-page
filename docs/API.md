@@ -62,3 +62,25 @@ curl -X POST http://localhost:3000/api/newsletter \
   -d '{"email":"lamia@example.com"}'
 ```
 
+## Admin endpoints
+
+Send the secret from `ADMIN_API_KEY` in the `x-api-key` header.
+
+| Endpoint | Description |
+| -------- | ----------- |
+| `GET /api/admin/messages?limit=20&offset=0` | Contact messages, newest first (`limit` max 100) |
+| `GET /api/admin/subscribers?limit=20&offset=0` | Newsletter subscribers, newest first |
+| `GET /api/admin/stats` | `{ stats: { messages, subscribers } }` |
+
+```bash
+curl http://localhost:3000/api/admin/messages -H "x-api-key: $ADMIN_API_KEY"
+```
+
+## Protections built in
+
+- **Validation and sanitising** of every field (trimmed, control characters removed, length limits).
+- **Honeypot field** (`website`): bots that fill it get a fake success response and nothing is stored.
+- **Rate limiting**: 5 write requests per minute per IP by default (`RATE_LIMIT_MAX`).
+- **Same-origin check**: browser requests from other sites are rejected.
+- **Body size limit** of 10 KB and strict `Content-Type` check.
+- **Constant-time API key comparison** for admin routes.
