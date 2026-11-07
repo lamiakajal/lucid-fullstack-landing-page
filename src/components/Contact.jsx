@@ -35,12 +35,18 @@ const contactInfo = [
   {
     id: "address",
     Icon: FaMapMarkerAlt,
-    lines: [{ text: "1001 Brickell Bay Dr." }, { text: "Suite 1900" }, { text: "Miami, FL 33131" }],
+    lines: [
+      { text: "1001 Brickell Bay Dr." },
+      { text: "Suite 1900" },
+      { text: "Miami, FL 33131" },
+    ],
   },
   {
     id: "email",
     Icon: FaEnvelope,
-    lines: [{ text: "support@yourname.com", href: "mailto:support@yourname.com" }],
+    lines: [
+      { text: "support@yourname.com", href: "mailto:support@yourname.com" },
+    ],
   },
 ];
 
@@ -120,7 +126,11 @@ export default function Contact() {
             <Reveal key={id} delay={index * 120}>
               <div className="group flex cursor-default flex-col items-center">
                 <div className="mb-3 flex h-12 w-12 items-center justify-center text-2xl text-[#008ed6] transition-transform duration-300 group-hover:-translate-y-1.5">
-                  <Icon aria-hidden="true" className="animate-bob" style={{ animationDelay: `${index * 0.35}s` }} />
+                  <Icon
+                    aria-hidden="true"
+                    className="animate-bob"
+                    style={{ animationDelay: `${index * 0.35}s` }}
+                  />
                 </div>
                 {lines.map((line) =>
                   line.href ? (
@@ -132,10 +142,13 @@ export default function Contact() {
                       {line.text}
                     </a>
                   ) : (
-                    <p key={line.text} className="text-[14px] leading-relaxed text-[#777777]">
+                    <p
+                      key={line.text}
+                      className="text-[14px] leading-relaxed text-[#777777]"
+                    >
                       {line.text}
                     </p>
-                  )
+                  ),
                 )}
               </div>
             </Reveal>
@@ -145,7 +158,11 @@ export default function Contact() {
         {/* Floating form card (the animation pauses while hovering or typing) */}
         <div className="animate-floating relative z-30 mx-auto -mb-36 max-w-3xl sm:-mb-44">
           <div className="rounded-sm border border-white/10 bg-[#15171e] p-6 text-white shadow-2xl transition-all duration-300 sm:p-10 md:p-12">
-            <form onSubmit={handleSubmit} className="space-y-4" aria-describedby="form-feedback">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-4"
+              aria-describedby="form-feedback"
+            >
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="space-y-4">
                   <div>
@@ -216,7 +233,10 @@ export default function Contact() {
                       className={inputClass}
                     />
                     {errors.subject && (
-                      <p id="subject-error" className="mt-1 text-xs text-red-400">
+                      <p
+                        id="subject-error"
+                        className="mt-1 text-xs text-red-400"
+                      >
                         {errors.subject}
                       </p>
                     )}
@@ -240,7 +260,11 @@ export default function Contact() {
                         Plan (optional)
                       </option>
                       {plans.map((plan) => (
-                        <option key={plan.id} value={plan.id} className="bg-[#1b1e26] text-gray-100">
+                        <option
+                          key={plan.id}
+                          value={plan.id}
+                          className="bg-[#1b1e26] text-gray-100"
+                        >
                           {plan.name}
                         </option>
                       ))}
@@ -283,7 +307,10 @@ export default function Contact() {
               </div>
 
               {/* Honeypot field: invisible to people and screen readers */}
-              <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden opacity-0">
+              <div
+                aria-hidden="true"
+                className="absolute left-[9999px] h-0 w-0 overflow-hidden opacity-0"
+              >
                 <label htmlFor="contact-website">Leave this field empty</label>
                 <input
                   id="contact-website"
@@ -297,14 +324,22 @@ export default function Contact() {
               </div>
 
               <div className="flex flex-col-reverse items-stretch gap-4 pt-2 md:flex-row md:items-center md:justify-between">
-                {/* Result message announced to screen readers */}
+                {/* Result message: a clear green box on success, a red box on error */}
                 <p
                   id="form-feedback"
                   role="status"
                   aria-live="polite"
-                  className={`text-sm ${status === "success" ? "text-emerald-400" : "text-red-400"}`}
+                  className={`text-sm font-semibold ${
+                    feedback
+                      ? status === "success"
+                        ? "rounded-xs border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-emerald-300"
+                        : "rounded-xs border border-red-500/40 bg-red-500/10 px-4 py-3 text-red-300"
+                      : ""
+                  }`}
                 >
-                  {feedback}
+                  {status === "success" && feedback
+                    ? `✓ ${feedback}`
+                    : feedback}
                 </p>
 
                 <button
