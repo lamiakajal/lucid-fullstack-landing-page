@@ -68,3 +68,27 @@ export function validateContact(input, { planIds = [] } = {}) {
   return { valid: Object.keys(errors).length === 0, errors, data, spam };
 }
 
+/** Validate the newsletter subscription payload. */
+export function validateSubscribe(input) {
+  if (!isPlainObject(input)) {
+    return { valid: false, errors: { body: "Invalid request body" }, data: null };
+  }
+  const data = { email: cleanText(input.email).toLowerCase() };
+  const errors = {};
+
+  if (!data.email) errors.email = "Email is required";
+  else if (!isValidEmail(data.email)) errors.email = "Please enter a valid email address";
+
+  const spam = cleanText(input.website) !== "";
+  return { valid: Object.keys(errors).length === 0, errors, data, spam };
+}
+
+/** Parse ?limit=&offset= query values into safe integers. */
+export function parsePagination(searchParams, { defaultLimit = 20, maxLimit = 100 } = {}) {
+  const limit = Number.parseInt(searchParams.get("limit") ?? "", 10);
+  const offset = Number.parseInt(searchParams.get("offset") ?? "", 10);
+  return {
+    limit: Number.isFinite(limit) && limit > 0 ? Math.min(limit, maxLimit) : defaultLimit,
+    offset: Number.isFinite(offset) && offset > 0 ? offset : 0,
+  };
+}
