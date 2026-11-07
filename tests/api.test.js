@@ -79,3 +79,24 @@ test("contact: rate limits repeated requests", async () => {
   assert.ok(res.headers.get("retry-after"));
   delete process.env.RATE_LIMIT_MAX;
 });
+
+test("newsletter: subscribes once and reports duplicates", async () => {
+  const first = await newsletterPost(post("/api/newsletter", { email: "n@example.com" }));
+  assert.equal(first.status, 201);
+  const second = await newsletterPost(post("/api/newsletter", { email: "N@example.com" }));
+  assert.equal(second.status, 200);
+  assert.equal((await second.json()).alreadySubscribed, true);
+});
+
+test("admin: requires the API key", async () => {
+  assert.equal((await messagesGet(admin("/api/admin/messages", "wrong"))).status, 401);
+  const ok = await messagesGet(admin("/api/admin/messages"));
+  assert.equal(ok.status, 200);
+  assert.ok((await ok.json()).total >= 1);
+});
+
+test("admin: is disabled when no key is configured", async () => {
+  delete process.env.ADMIN_API_KEY;
+  assert.equal((await messagesGet(admin("/api/admin/messages"))).status, 503);
+  process.env.ADMIN_API_KEY = "secret";
+});
