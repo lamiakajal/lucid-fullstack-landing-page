@@ -11,7 +11,8 @@ const sourceSans = Source_Sans_3({
   variable: "--font-source-sans",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://lucid-lamiakajal.vercel.app";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://lucid-lamiakajal.vercel.app";
 const authorName = "Lamia Kajal";
 const authorUrl = "https://github.com/lamiakajal";
 const title = `Lucid Landing Page | Full-Stack Next.js Project by ${authorName}`;
@@ -61,7 +62,14 @@ export const metadata = {
     locale: "en_US",
     title,
     description,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: `Lucid landing page by ${authorName}` }],
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `Lucid landing page by ${authorName}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -84,19 +92,28 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={sourceSans.variable}>
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning>
         {/* Without JavaScript the scroll-reveal never runs and the preloader never closes */}
         <noscript>
-          <style>{".reveal{opacity:1!important;transform:none!important}.preloader{display:none!important}"}</style>
+          <style>
+            {
+              ".reveal{opacity:1!important;transform:none!important}.preloader{display:none!important}"
+            }
+          </style>
         </noscript>
 
-        <JsonLd siteUrl={siteUrl} authorName={authorName} authorUrl={authorUrl} description={description} />
+        <JsonLd
+          siteUrl={siteUrl}
+          authorName={authorName}
+          authorUrl={authorUrl}
+          description={description}
+        />
         <Preloader />
 
         {/* Lets keyboard users jump straight past the navigation */}
         <a
           href="#main"
-          className="sr-only z-[100] rounded bg-[#008ed6] px-4 py-2 font-bold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+          className="sr-only z-100 rounded bg-[#008ed6] px-4 py-2 font-bold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
         >
           Skip to content
         </a>
