@@ -63,3 +63,32 @@ export function insert(collection, doc) {
   });
 }
 
+/** List documents, newest first, with simple pagination. */
+export function list(collection, { limit = 20, offset = 0 } = {}) {
+  return withLock(collection, async () => {
+    const docs = await readAll(collection);
+    return docs.slice().reverse().slice(offset, offset + limit);
+  });
+}
+
+/** Number of documents in a collection. */
+export function count(collection) {
+  return withLock(collection, async () => (await readAll(collection)).length);
+}
+
+/** True when every key in `filter` equals the same key in `doc`. */
+function matches(doc, filter) {
+  return Object.entries(filter).every(([key, value]) => doc[key] === value);
+}
+
+/**
+ * Find the first document matching a filter object such as { email: "a@b.co" }
+ * (or null). Plain objects keep the interface compatible with MongoDB.
+ */
+export function findOne(collection, filter) {
+  return withLock(collection, async () => {
+    const docs = await readAll(collection);
+    return docs.find((doc) => matches(doc, filter)) ?? null;
+  });
+}
+
