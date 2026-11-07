@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Local JSON data store created by the API
     ".data/**",
+    // Example files that import optional packages (see docs/MONGODB.md)
+    "docs/examples/**",
   ]),
 ]);
 
