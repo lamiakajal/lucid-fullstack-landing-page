@@ -42,3 +42,40 @@ test("health, plans and testimonials return data", async () => {
   assert.equal((await (await plansGet()).json()).plans.length, 4);
   assert.equal((await (await testimonialsGet()).json()).testimonials.length, 8);
 });
+
+test("contact: stores a valid message", async () => {
+  const res = await contactPost(post("/api/contact", good));
+  assert.equal(res.status, 201);
+  assert.ok((await res.json()).id);
+});
+
+test("contact: rejects invalid input with field errors", async () => {
+  const res = await contactPost(post("/api/contact", { ...good, email: "nope" }));
+  assert.equal(res.status, 422);
+  assert.ok((await res.json()).details.email);
+});
+
+test("contact: rejects bad JSON, wrong content type and cross-origin posts", async () => {
+  assert.equal((await contactPost(post("/api/contact", "{oops"))).status, 400);
+  assert.equal((await contactPost(post("/api/contact", good, { "content-type": "text/plain" }))).status, 415);
+  assert.equal((await contactPost(post("/api/contact", good, { origin: "https://evil.example" }))).status, 403);
+});
+
+test("contact: honeypot pretends success without storing", async () => {
+  const before = (await (await statsGet(admin("/api/admin/stats"))).json()).stats.messages;
+  const res = await contactPost(post("/api/contact", { ...good, website: "spam" }));
+  assert.equal(res.status, 201);
+  const after = (await (await statsGet(admin("/api/admin/stats"))).json()).stats.messages;
+  assert.equal(after, before);
+});
+
+test("contact: rate limits repeated requests", async () => {
+  process.env.RATE_LIMIT_MAX = "2";
+  resetWriteLimiter();
+  await contactPost(post("/api/contact", good));
+  await contactPost(post("/api/contact", good));
+  const res = await contactPost(post("/api/contact", good));
+  assert.equal(res.status, 429);
+  assert.ok(res.headers.get("retry-after"));
+  delete process.env.RATE_LIMIT_MAX;
+});
