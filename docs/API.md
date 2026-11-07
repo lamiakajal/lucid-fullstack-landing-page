@@ -24,3 +24,41 @@ Errors look like this (`details` is only present for validation errors):
 | 429 | Rate limit exceeded (see `Retry-After` header) |
 | 503 | Admin API disabled (no `ADMIN_API_KEY` configured) |
 
+## Public endpoints
+
+### `GET /api/health`
+Liveness probe. Returns `{ ok, status, uptimeSeconds, timestamp }`.
+
+### `GET /api/plans`
+Returns all pricing plans: `{ ok, plans: [{ id, name, price, period, desc, popular }] }`.
+
+### `GET /api/testimonials`
+Returns client testimonials: `{ ok, testimonials: [{ id, quote, name, role, avatar }] }`.
+
+### `POST /api/contact`
+Stores a contact message.
+
+| Field | Required | Rules |
+| ----- | -------- | ----- |
+| `name` | yes | 1-100 characters |
+| `email` | yes | valid email, max 254 characters |
+| `subject` | yes | 1-150 characters |
+| `message` | yes | 10-2000 characters |
+| `plan` | no | one of `free`, `personal`, `business`, `unlimited` |
+| `website` | no | honeypot, must stay empty |
+
+```bash
+curl -X POST http://localhost:3000/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Lamia","email":"lamia@example.com","subject":"Hello","message":"I would like to know more."}'
+```
+
+### `POST /api/newsletter`
+Subscribes an email address. Subscribing twice is safe: the second call returns `200` with `alreadySubscribed: true`.
+
+```bash
+curl -X POST http://localhost:3000/api/newsletter \
+  -H "Content-Type: application/json" \
+  -d '{"email":"lamia@example.com"}'
+```
+
