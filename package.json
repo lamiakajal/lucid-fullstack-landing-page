@@ -1,7 +1,11 @@
 {
   "name": "lucid-fullstack-landing-page",
   "version": "0.1.0",
+  "description": "Lucid - a responsive animated landing page with a built-in Next.js API (contact form, newsletter, admin endpoints).",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
