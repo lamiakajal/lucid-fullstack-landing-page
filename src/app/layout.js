@@ -1,6 +1,7 @@
 import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import Preloader from "@/components/ui/Preloader";
+import JsonLd from "@/components/seo/JsonLd";
 
 // Self-hosted at build time by next/font: no render-blocking request to Google
 const sourceSans = Source_Sans_3({
@@ -89,6 +90,7 @@ export default function RootLayout({ children }) {
           <style>{".reveal{opacity:1!important;transform:none!important}.preloader{display:none!important}"}</style>
         </noscript>
 
+        <JsonLd siteUrl={siteUrl} authorName={authorName} authorUrl={authorUrl} description={description} />
         <Preloader />
 
         {/* Lets keyboard users jump straight past the navigation */}
