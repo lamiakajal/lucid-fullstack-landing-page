@@ -245,3 +245,32 @@ section[id] {
   transform: none;
 }
 
+/* ==========================================================================
+   Respect users who prefer reduced motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .heading-underline {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  /* No auto-advancing carousel for users who asked for less motion */
+  .carousel-progress {
+    animation: none !important;
+    transform: scaleX(0);
+  }
+}
