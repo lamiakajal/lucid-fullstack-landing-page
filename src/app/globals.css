@@ -177,3 +177,52 @@ section[id] {
   animation-play-state: paused;
 }
 
+/* Pulsing ring placed behind an element (parent needs `relative`) */
+.pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--color-primary);
+  animation: pulse-ring 2.6s ease-out infinite;
+  animation-delay: var(--ring-delay, 0s);
+  pointer-events: none;
+}
+
+/* Shimmer light sweep (parent needs `relative overflow-hidden`) */
+.shimmer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  animation: shimmer 3.6s ease-in-out infinite;
+  animation-delay: var(--shimmer-delay, 0s);
+  pointer-events: none;
+}
+
+/* Animated gradient bar */
+.gradient-bar {
+  background: linear-gradient(90deg, #008ed6, #7fd6ff, #008ed6, #7fd6ff);
+  background-size: 200% 100%;
+  animation: gradient-pan 4s linear infinite;
+}
+
+/* Testimonials progress bar: when it finishes, the carousel advances */
+.carousel-progress {
+  transform-origin: left;
+  animation: progress-fill 4.5s linear forwards;
+}
+
+/* Animated underline below section headings; hover/touch keeps it fully open */
+.heading-underline {
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: underline-sweep 5s ease-in-out infinite;
+}
+.heading-underline[data-active="true"] {
+  animation: none;
+  transform: scaleX(1);
+  opacity: 1;
+}
+
