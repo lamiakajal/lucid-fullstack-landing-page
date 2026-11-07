@@ -51,3 +51,61 @@
 - GitHub Actions workflow that runs lint, tests and a production build.
 - Images served as WebP (the hero background went from 1.7 MB to about 10 KB).
 
+---
+
+## 🛠️ Tech Stack
+
+| Area | Technology |
+| ---- | ---------- |
+| Framework | Next.js 16 (App Router) + React 19 with React Compiler |
+| Styling | Tailwind CSS 4 + custom CSS keyframes |
+| Icons | React Icons |
+| API | Next.js route handlers |
+| Storage | JSON files by default, MongoDB optional |
+| Tests | `node:test` |
+| CI/CD | GitHub Actions + Vercel |
+
+---
+
+## 🚀 Getting Started
+
+**Requirements:** Node.js 20.9 or newer.
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/lamiakajal/lucid-fullstack-landing-page.git
+cd lucid-fullstack-landing-page
+
+# 2. Install dependencies
+npm install
+
+# 3. Create your environment file and set ADMIN_API_KEY
+cp .env.example .env.local
+
+# 4. Start the development server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### Scripts
+
+| Command | Description |
+| ------- | ----------- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm start` | Run the production build |
+| `npm run lint` | Lint the code with ESLint |
+| `npm test` | Run the unit and API tests |
+
+### Environment variables
+
+| Variable | Required | Description |
+| -------- | -------- | ----------- |
+| `NEXT_PUBLIC_SITE_URL` | recommended | Public site URL (canonical links, sitemap, Open Graph) |
+| `ADMIN_API_KEY` | for admin API | Secret sent in the `x-api-key` header |
+| `GOOGLE_SITE_VERIFICATION` | optional | Google Search Console verification token |
+| `DATA_DIR` | optional | Folder of the JSON store (default `./.data`, `/tmp/lucid-data` on Vercel) |
+| `RATE_LIMIT_MAX` | optional | Write requests per minute per IP (default `5`) |
+| `MONGODB_URI`, `MONGODB_DB` | optional | Only when using the MongoDB drop-in |
+
