@@ -150,3 +150,23 @@ lucid-fullstack-landing-page/
 └── tests/                     # Unit and API tests
 ```
 
+---
+
+## ☁️ Deployment
+
+Deploy on [Vercel](https://vercel.com). Important: on serverless platforms the built-in JSON store is temporary.
+Read [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) and [docs/MONGODB.md](docs/MONGODB.md) to connect a real database for production.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) first. To report a security problem, see [SECURITY.md](SECURITY.md).
+
+---
+
+## 📄 License
+
+Released under the [MIT License](LICENSE).
+
+**Design & development by [Lamia Kajal](https://github.com/lamiakajal)**
