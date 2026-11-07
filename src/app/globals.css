@@ -130,6 +130,11 @@ section[id] {
   to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
+/* If JavaScript never finishes loading, the preloader hides itself after 8 seconds */
+@keyframes preloader-failsafe {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
 /* Glow that breathes around the featured pricing card */
 @keyframes glow-breathe {
   0%, 100% { box-shadow: 0 0 0 0 rgba(0, 142, 214, 0.35); }
@@ -164,6 +169,11 @@ section[id] {
 
 .animate-hero-in {
   animation: hero-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Full-screen preloader (see components/ui/Preloader.jsx) */
+.preloader {
+  animation: preloader-failsafe 0.4s ease 8s forwards;
 }
 
 /* Floating contact card: pauses while the visitor hovers or types */
