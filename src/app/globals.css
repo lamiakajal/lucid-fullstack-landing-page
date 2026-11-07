@@ -39,3 +39,28 @@ p {
   line-height: 1.65;
 }
 
+/* Slim, branded scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-section-dark);
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-section-dark); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 999px;
+  border: 2px solid var(--color-section-dark);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-primary-hover); }
+
+/* Visible keyboard focus for every interactive element */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* Offset anchor targets so the fixed navbar never covers section titles */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
