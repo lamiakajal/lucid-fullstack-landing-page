@@ -109,3 +109,44 @@ Open [http://localhost:3000](http://localhost:3000).
 | `RATE_LIMIT_MAX` | optional | Write requests per minute per IP (default `5`) |
 | `MONGODB_URI`, `MONGODB_DB` | optional | Only when using the MongoDB drop-in |
 
+---
+
+## 📡 API
+
+| Method | Endpoint | Description |
+| ------ | -------- | ----------- |
+| GET | `/api/health` | Health check |
+| GET | `/api/plans` | Pricing plans |
+| GET | `/api/testimonials` | Client testimonials |
+| POST | `/api/contact` | Save a contact message |
+| POST | `/api/newsletter` | Subscribe an email |
+| GET | `/api/admin/messages` | List messages 🔒 |
+| GET | `/api/admin/subscribers` | List subscribers 🔒 |
+| GET | `/api/admin/stats` | Totals 🔒 |
+
+🔒 = requires the `x-api-key` header. Full details and examples: [docs/API.md](docs/API.md).
+
+---
+
+## 📂 Project Structure
+
+```text
+lucid-fullstack-landing-page/
+├── .github/                   # CI workflow, issue and pull request templates
+├── docs/                      # API, deployment, MongoDB, SEO and GitHub setup guides
+├── public/                    # Optimised static assets (WebP) and the OG image
+├── src/
+│   ├── app/
+│   │   ├── api/               # REST endpoints (route handlers)
+│   │   ├── layout.js          # Root layout, fonts, SEO metadata, preloader
+│   │   ├── page.js            # Landing page assembly
+│   │   ├── globals.css        # Design tokens and animation keyframes
+│   │   └── not-found.js, error.js, global-error.js, robots.js, sitemap.js, manifest.js
+│   ├── components/            # Page sections (Hero, Features, Pricing, ...)
+│   │   ├── ui/                # Reusable pieces (Preloader, Reveal, SectionHeading, ...)
+│   │   └── seo/               # JSON-LD structured data
+│   ├── data/                  # Plans and testimonials shared by the UI and the API
+│   └── lib/                   # Backend helpers (db, validators, rate limit, auth)
+└── tests/                     # Unit and API tests
+```
+
