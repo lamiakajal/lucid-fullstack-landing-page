@@ -92,3 +92,19 @@ export function findOne(collection, filter) {
   });
 }
 
+/**
+ * Insert only when no existing document matches `filter` (e.g. { email }).
+ * Runs inside a single lock, so concurrent calls cannot create duplicates.
+ * Returns { doc, created }.
+ */
+export function insertUnique(collection, filter, doc) {
+  return withLock(collection, async () => {
+    const docs = await readAll(collection);
+    const existing = docs.find((item) => matches(item, filter));
+    if (existing) return { doc: existing, created: false };
+    const stored = { id: randomUUID(), createdAt: new Date().toISOString(), ...doc };
+    docs.push(stored);
+    await writeAll(collection, docs);
+    return { doc: stored, created: true };
+  });
+}
