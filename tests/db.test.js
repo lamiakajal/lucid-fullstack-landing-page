@@ -29,3 +29,26 @@ test("list returns newest first and paginates", async () => {
   const page = await list("ordered", { limit: 2, offset: 0 });
   assert.deepEqual(page.map((d) => d.n), [3, 2]);
 });
+
+test("concurrent inserts are not lost", async () => {
+  await Promise.all(Array.from({ length: 25 }, (_, n) => insert("concurrent", { n })));
+  assert.equal(await count("concurrent"), 25);
+});
+
+test("insertUnique prevents duplicates even when called concurrently", async () => {
+  const results = await Promise.all(
+    Array.from({ length: 5 }, () => insertUnique("subs", { email: "a@b.co" }, { email: "a@b.co" }))
+  );
+  assert.equal(results.filter((r) => r.created).length, 1);
+  assert.equal(await count("subs"), 1);
+});
+
+test("findOne matches documents by filter object", async () => {
+  await insert("lookup", { email: "x@y.co", role: "admin" });
+  assert.equal((await findOne("lookup", { email: "x@y.co" })).role, "admin");
+  assert.equal(await findOne("lookup", { email: "nobody@y.co" }), null);
+});
+
+test("invalid collection names are rejected", async () => {
+  await assert.rejects(() => insert("../evil", {}), /Invalid collection name/);
+});
