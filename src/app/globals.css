@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens
+   ========================================================================== */
+:root {
+  --color-primary: #008ed6;
+  --color-primary-hover: #0077b5;
+  --color-heading: #1a1a1a;
+  --color-subheading: #26292e;
+  --color-paragraph: #999999;
+  --color-body-bg: #ffffff;
+  --color-section-dark: #15171e;
+  --color-card-border: #e8e8e8;
+  --color-divider: #ededed;
+}
+
+/* ==========================================================================
+   Base styles
+   ========================================================================== */
+html {
+  scroll-behavior: smooth;
+  /* Prevent the floating decorations from creating horizontal scroll on mobile */
+  overflow-x: clip;
+}
+
+body {
+  /* --font-source-sans is injected by next/font in layout.js */
+  font-family: var(--font-source-sans), "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--color-heading);
+  background-color: var(--color-body-bg);
+  line-height: 1.6;
+  overflow-x: clip;
+}
+
+p {
+  color: var(--color-paragraph);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
